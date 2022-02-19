@@ -1,20 +1,18 @@
-import { StatusBar } from 'expo-status-bar';
+import { Provider } from 'react-redux';
+import ReduxThunk from 'redux-thunk';
 import { StyleSheet, Text, View } from 'react-native';
+import LoginScreen from './screens/login/LoginScreen';
+import authReducer from './store/reducers/auth';
+import ScreenNavigation from './Navigation/ScreenNavigation';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
+import { enableScreens } from 'react-native-screens';
 
+const store = createStore(authReducer,applyMiddleware(ReduxThunk));
+enableScreens();
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <Provider store={store}>
+       <ScreenNavigation/>
+    </Provider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
