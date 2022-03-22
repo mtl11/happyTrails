@@ -25,7 +25,7 @@ export default StyleSheet.create({
     },
     img:{
         height: 150,
-        width: 150
+        width: 150,
     },
     titleImg:{
         justifyContent:'center',

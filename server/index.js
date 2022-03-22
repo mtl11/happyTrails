@@ -22,3 +22,7 @@ app.listen(port, () => {
 app.get('/users', db.getUsers);
 app.get('/users/:id', db.getUserById);
 app.post('/users', db.createUser);
+app.post('/tasks', db.addTask);
+app.get('/tasks', db.getTasks);
+app.get('/tasks/:userid', db.getTasksById);
+app.post('/tasks/:taskid', db.deleteTask);

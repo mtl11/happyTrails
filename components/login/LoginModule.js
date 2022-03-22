@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View , TextInput, SafeAreaView, Button, TouchableOpacity, Modal, Alert} from 'react-native';
+import { StyleSheet, Text, View , TextInput, SafeAreaView, Image, TouchableOpacity, Modal, Alert} from 'react-native';
 import React, { useState } from 'react';
 import styles from '../../styles/authModule.js';
 import {useSelector, useDispatch} from 'react-redux';
@@ -20,9 +20,8 @@ const LoginModule = props => {
             const userData = await AsyncStorage.getItem('userData');
             setEmail("");
             setPassword("");
-            if (userData){
-                props.setLoggedIn(true);
-                props.call()
+            if (userData != null){
+                props.call();
             }
         }catch(err){
             console.log(err);
@@ -39,27 +38,44 @@ const LoginModule = props => {
                     <Text style ={styles.bigText}>
                         Login to EDEN
                     </Text>
-                    <TextInput
-                        placeholder = {'Email'}
-                        style = {styles.userInput}
-                        onChangeText={text => setEmail(text)}
-                        autoCapitalize = {'none'}
-                        autoCorrect = {false}
-                        keyboardType = {'email-address'}
-                    />
-                    <TextInput
-                        placeholder = {'Password'}
-                        style = {styles.userInput}
-                        onChangeText={text => setPassword(text)}
-                        autoCapitalize = {'none'}
-                        autoCorrect = {false}
-                        secureTextEntry={true}
-                    />
+                        <Image 
+                    style = {styles.img}
+                    source={{
+                        uri: 'https://direct.rhapsody.com/imageserver/images/alb.325466613/500x500.jpg',
+                    }}/>
+                    <View>
+                        <Text style = {styles.smallText}>
+                            Enter Info:
+                        </Text>
+                        <TextInput
+                            placeholder = {'Email'}
+                            style = {styles.userInput}
+                            onChangeText={text => setEmail(text)}
+                            autoCapitalize = {'none'}
+                            autoCorrect = {false}
+                            keyboardType = {'email-address'}
+                        />
+                        <TextInput
+                            placeholder = {'Password'}
+                            style = {styles.userInput}
+                            onChangeText={text => setPassword(text)}
+                            autoCapitalize = {'none'}
+                            autoCorrect = {false}
+                            secureTextEntry={true}
+                        />
+                    </View>
+                    <View>
                     <TouchableOpacity style = {styles.buttonContainer}
                     onPress={()=>{props.setModule(!props.isVisible), tryLogin()}}>
-                        <Text style = {styles.button}
+                        <Text style = {[styles.button,{backgroundColor:"#a8ffa8"}]}
                         >Login</Text>
                     </TouchableOpacity>
+                    <TouchableOpacity style = {styles.buttonContainer}
+                    onPress={()=>{props.setModule(!props.isVisible)}}>
+                        <Text style = {styles.button}
+                        >Cancel</Text>
+                    </TouchableOpacity>
+                    </View>
                 </View>
             </View>
         </Modal>

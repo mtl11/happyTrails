@@ -2,8 +2,9 @@ export const AUTHENTICATE = 'AUTHENTICATE';
 export const LOGOUT = 'LOGOUT';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
-export const authenticate = (userId, email, loggedIn) => {
-  return { type: AUTHENTICATE, userId: userId, email:email, loggedIn:loggedIn };
+export const authenticate = (userId, username, firstName, age, email, password, loggedIn) => {
+  return { type: AUTHENTICATE, userId: userId, username: username, firstName: firstName, 
+    age:age, email:email, password:password, loggedIn:loggedIn };
 };
 
 export const login = (email, password) =>{
@@ -14,15 +15,15 @@ export const login = (email, password) =>{
                     for (const item in json){
                         const userInfo = json[item];
                         if(email == userInfo.email && password == userInfo.password){
-                            dispatch(authenticate(userInfo.id, userInfo.email, true));
+                            dispatch(authenticate(userInfo.id,userInfo.username, 
+                                userInfo.firstName, userInfo.age, userInfo.email, userInfo.password, true));
                             saveDataToStorage(userInfo.username, userInfo.firstName, userInfo.age, userInfo.email,userInfo.password);
-                            return true;
+                            return;
                         }
                     }
                     console.log("No User Found");
                     dispatch({type: LOGOUT});
                     AsyncStorage.removeItem('userData');
-                    return false;
             })
     }
 }

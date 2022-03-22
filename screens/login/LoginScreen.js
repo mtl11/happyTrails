@@ -7,20 +7,20 @@ import styles from '../../styles/login';
 const LoginScreen = props => {
     const [modalVisibleSignUp, setModalVisibleSignUp] = useState(false);
     const [modalVisibleLogin, setModalVisibleLogin] = useState(false);
-    const [loggedIn, setLoggedIn] = useState(false);
-    const call = () => {if (loggedIn) {props.navigation.navigate({routeName: 'OtherNav'})}}
+    const call = () => {
+        props.navigation.navigate({routeName: 'OtherNav'})
+    }
+    
     return(
         <View style={styles.container}>
             <LoginModule 
             isVisible ={modalVisibleLogin}
             setModule ={setModalVisibleLogin}
-            setLoggedIn = {setLoggedIn}
             call = {call}
             />
             <SignUpModule
             isSignVisible ={modalVisibleSignUp}
             setSignModule ={setModalVisibleSignUp}
-            
             />
                 <Text style ={{fontSize: 30,padding:5}} >
                     Welcome to EDEN
@@ -31,8 +31,8 @@ const LoginScreen = props => {
                 <Image 
                 style = {styles.img}
                 source={{
-          uri: 'https://upload.wikimedia.org/wikipedia/en/1/19/LearntoFlySurfacesEltonJohn.png',
-        }}/>
+                    uri: 'https://upload.wikimedia.org/wikipedia/en/1/19/LearntoFlySurfacesEltonJohn.png',
+                }}/>
         <View style = {styles.authContainer}>
             <TouchableOpacity 
                 onPress={()=>{

@@ -8,8 +8,8 @@ export default StyleSheet.create({
         color: "black",
         borderColor: "black",
         padding: 8,
-        fontSize:25,
-        backgroundColor: "#20b2aa",
+        fontSize:30,
+        backgroundColor: "#ffa8a8",
         shadowColor: '#171717',
         shadowOffset: {width: -4, height: 4},
         shadowOpacity: .5,
@@ -36,16 +36,26 @@ export default StyleSheet.create({
         shadowOpacity: 0.2,
         shadowRadius: 3,
         backgroundColor: "#A8FFFF",
-        width:'70%',
-        height: '40%'
-        
+        width:'90%',
+        height: '80%',
+        justifyContent:'space-between'
     },
     bigText:{
-        fontSize:22,
+        fontSize:30,
     },
     userInput: {
         borderBottomWidth: 2,
         borderBottomColor:  'rgba(0, 0, 0, .5)',
-        paddingTop: 12 
+        paddingTop: 12,
+        fontSize: 20,
+        marginBottom: 12
+    },
+    img:{
+        height: 150,
+        width: 150,
+        alignSelf:'center'
+    },
+    smallText: {
+        fontSize: 20
     }
 })
