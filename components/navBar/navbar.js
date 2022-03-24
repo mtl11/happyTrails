@@ -8,18 +8,18 @@ const Navbar = props =>{
     <View style ={styles.taskBar}>
             <TouchableOpacity style = {styles.taskBarElements} 
                 onPress={() => {props.props.navigation.navigate({routeName: "TasksScreen"})}}>
-                {currentScreen== "TasksScreen" ? <Ionicons name="ios-list-circle" size={40} color="white" /> :
-                 <Ionicons name="ios-list-circle-outline" size={40} color="white" />}
+                {currentScreen== "TasksScreen" ? <Ionicons name="ios-list-circle" size={40} color="black" /> :
+                 <Ionicons name="ios-list-circle-outline" size={40} color="black" />}
             </TouchableOpacity>
             <TouchableOpacity style = {styles.taskBarElements}
             onPress={() => {props.props.navigation.navigate({routeName: "ProfileScreen"})}}>
-                {currentScreen== "ProfileScreen" ? <FontAwesome5 name="user-alt" size={30} color="white" />:
-                 <FontAwesome5 name="user" size={30} color="white" />}
+                {currentScreen== "ProfileScreen" ? <FontAwesome5 name="user-alt" size={30} color="black" />:
+                 <FontAwesome5 name="user" size={30} color="black" />}
             </TouchableOpacity>
             <TouchableOpacity style = {styles.taskBarElements}
             onPress={() => {props.props.navigation.navigate({routeName: "JournalScreen"})}}>
-                {currentScreen== "JournalScreen" ? <Ionicons name="ios-journal" size={30} color="white" /> :
-                 <Ionicons name="ios-journal-outline" size={30} color="white" /> }
+                {currentScreen== "JournalScreen" ? <Ionicons name="ios-journal" size={30} color="black" /> :
+                 <Ionicons name="ios-journal-outline" size={30} color="black" /> }
             </TouchableOpacity>
     </View>
     )
@@ -27,19 +27,20 @@ const Navbar = props =>{
 
 const styles = StyleSheet.create({
     taskBar:{
-        height:"10%",
-        borderTopWidth: 1,
+        height:"12%",
+        //borderTopWidth: 1,
         flexDirection: 'row',
         justifyContent:'space-between',
-        backgroundColor: 'black'
+        backgroundColor: 'white'
     },taskBarElements:{
         alignItems: 'center',
+        justifyContent:'flex-start',
         paddingHorizontal:20,
         paddingVertical:5
     },
-    taskContainer:{
-        height: "90%"
-    }
+    // taskContainer:{
+    //     height: "90%"
+    // }
 })
 export default Navbar;
 

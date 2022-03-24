@@ -67,7 +67,7 @@ const LoginModule = props => {
                     <View>
                     <TouchableOpacity style = {styles.buttonContainer}
                     onPress={()=>{props.setModule(!props.isVisible), tryLogin()}}>
-                        <Text style = {[styles.button,{backgroundColor:"#a8ffa8"}]}
+                        <Text style = {styles.button}
                         >Login</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style = {styles.buttonContainer}

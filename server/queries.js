@@ -50,8 +50,6 @@ const getTasks = (request, response) => {
 
 const getTasksById = (request, response) => {
   const userid = parseInt(request.params.userid);
-  // console.log(userid);
-  // console.log("tasks grabbed by id");
   pool.query('SELECT * FROM tasks WHERE userid = $1', [userid], (error, results) => {
     if (error) {
       throw error

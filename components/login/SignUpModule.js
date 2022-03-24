@@ -37,12 +37,13 @@ const SignUpModule = (props) => {
             >
             <View style={styles.modalView}>
                 <View style={styles.dialogBox}>
+                    <View style ={{height: "75%"}}>
                     <Text style ={styles.bigText}>
                         Sign Up for EDEN
                     </Text>
                     <View>
                         <Text style = {styles.smallText}>
-                            Enter Info:
+                            Enter Information:
                         </Text>
                         <TextInput
                             placeholder = {'Username'}
@@ -83,18 +84,22 @@ const SignUpModule = (props) => {
                             secureTextEntry={true}
                         />
                     </View>
-                    <View>
+                    </View>
+                    <View style ={{height: "25%"}}>
+                        <View style = {styles.buttonContainer}>
                         <TouchableOpacity 
-                            style = {styles.buttonContainer} 
                             onPress={() => {props.setSignModule(!props.isSignVisible), trySignUp()}}>
-                            <Text style = {[styles.button,{backgroundColor:"#a8ffa8"}]}>
-                                Sign Up
-                            </Text>
+                                <View>
+                                    <Text style = {styles.button}>
+                                        Sign Up
+                                    </Text>
+                                </View>
                         </TouchableOpacity>
-                        <TouchableOpacity style = {styles.buttonContainer}
+                        </View>
+                        <TouchableOpacity style = {styles.buttonContainerCancel}
                         onPress={()=>{props.setSignModule(!props.isSignVisible)}}>
-                            <Text style = {styles.button}
-                            >Cancel</Text>
+                           <View><Text style = {styles.cancelButton}
+                            >Cancel</Text></View> 
                         </TouchableOpacity>
                     </View>
                 </View>

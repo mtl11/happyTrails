@@ -4,10 +4,9 @@ import Navbar from '../../components/navBar/navbar';
 import { Fontisto } from '@expo/vector-icons';
 import TaskModule from '../../components/tasks/TaskModule';
 import {useSelector, useDispatch} from 'react-redux';
-import { FontAwesome } from '@expo/vector-icons';
 import * as taskActions from '../../store/actions/task';
 import IndividualTask from '../../components/tasks/IndividualTask';
-import task from '../../store/reducers/task';
+import { AntDesign } from '@expo/vector-icons';
 
 const TasksScreen = props => {
     const [visible, setVisible] = useState(false);
@@ -16,9 +15,8 @@ const TasksScreen = props => {
     const [loading, setLoading] = useState(true);
     const [allTasks, setAllTasks] = useState();
     const dispatch = useDispatch();
-
     const [sunIcon, setSunIcon] = useState(false);
-    const [allIcon, setAllIcon] = useState(false);
+    const [allIcon, setAllIcon] = useState(true);
     const [moonIcon, setMoonIcon] = useState(false);
 
     const getTasksFunc = async () => {
@@ -27,7 +25,7 @@ const TasksScreen = props => {
         console.log(tasks)
         setAllTasks(tasks);
     }
-    
+
     useEffect(()=>{
         getTasksFunc();
         setLoading(false);
@@ -41,34 +39,38 @@ const TasksScreen = props => {
             <View style = {styles.taskContainer}>
                 <View style = {styles.iconContainer}>
                     <TouchableOpacity 
-                        style={[styles.topIcons,{backgroundColor: sunIcon ? "#FFDBFF": null,}]} 
-                        onPress={()=>{setSunIcon(!sunIcon)}}>
+                        style={[styles.topIcons,{backgroundColor: sunIcon ? "#A8FFFF": null,}]} 
+                        onPress={()=>{setSunIcon(true),setAllIcon(false),setMoonIcon(false)}}>
                             <Fontisto name="day-sunny" size={24} color="black" />
                     </TouchableOpacity>
                     <TouchableOpacity 
-                        style={[styles.topIcons,{backgroundColor: allIcon ? "#FFDBFF": null,}]} 
-                        onPress={()=>{setAllIcon(!allIcon)}}>
+                        style={[styles.topIcons,{backgroundColor: allIcon ? "#A8FFFF": null,}]} 
+                        onPress={()=>{setSunIcon(false),setAllIcon(true),setMoonIcon(false)}}>
                             <Fontisto name="world-o" size={24} color="black" />
                     </TouchableOpacity>
                     <TouchableOpacity 
-                        style={[styles.topIcons,{backgroundColor: moonIcon ? "#FFDBFF": null,}]} 
-                        onPress={()=>{setMoonIcon(!moonIcon)}}>
+                        style={[styles.topIcons,{backgroundColor: moonIcon ? "#A8FFFF": null,}]} 
+                        onPress={()=>{setSunIcon(false),setAllIcon(false),setMoonIcon(true)}}>
                             <Fontisto name="night-clear" size={24} color="black" />
                     </TouchableOpacity>
                 </View>
+                <View style={styles.taskList}>
                         {loading && <Text>Loading...</Text>}
                         {tasks && (
                         <FlatList
                         contentContainerStyle={{ paddingBottom: 20 }}
                         data={allTasks}
                         renderItem={({item}) => 
-                        <IndividualTask info ={item.task} id = {item.id} userId = {item.userid} deleteTask={deleteTask}/>}
+                        <IndividualTask info ={item.task} id = {item.id} userId = {item.userid} mode = {item.mode}/>}
                         style = {styles.taskFlatList}
                         />)}
                         <TouchableOpacity style={styles.addButton} onPress={()=>{setVisible(!visible)}}>
-                            <Text>ADD</Text>
+                            
+                        <AntDesign name="pluscircleo" size={28} color="black" />
+                            <Text style={styles.addText}>Add Routine</Text>
                         </TouchableOpacity>
                     <View>
+                </View>
                 </View>
             </View>
             <Navbar 
@@ -81,7 +83,15 @@ const TasksScreen = props => {
 const styles = StyleSheet.create({
     taskContainer:{
         height: "90%",
-        alignContent:'center'
+        alignContent:'center',
+        backgroundColor: "#FFFFDB",
+    },
+    addText:{
+        fontSize: 24
+    },
+    taskList:{
+        height:"90%",
+        backgroundColor: "#FFFFDB"
     },
     topIcons:{
         padding: 8,
@@ -91,7 +101,8 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
         flexDirection: 'row',
         marginTop: '10%',
-        marginBottom: '5%',
+       
+        marginBottom: '1.5%',
         marginHorizontal: '5%'
     },
     modalView:{
@@ -110,20 +121,25 @@ const styles = StyleSheet.create({
         width: "80%"
     },
     taskFlatList:{
-        borderWidth: 1,
+        //borderWidth: 1,
         marginHorizontal: 10,
         marginBottom: 10,
-        borderRadius: 10
-
+        //borderRadius: 10,
+        // backgroundColor: "#ECECEC"
     }, addButton:{
-        width:"95%",
+        width:"60%",
         alignSelf: "center",
-        borderWidth: 1,
+        justifyContent:"space-between",
+        paddingHorizontal: "8%",
+        flexDirection: "row",
+        borderWidth: 1.5,
         alignItems: "center",
         padding:10,
+        borderRadius: 45,
         marginHorizontal: 10,
         marginBottom: 10, 
-        backgroundColor: "#FFFFDB"
+        backgroundColor: "#FFDBFF",
+        height: "8%"
     }
 })
 

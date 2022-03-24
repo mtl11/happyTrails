@@ -14,18 +14,27 @@ const TaskModule = props =>{
     const dispatch = useDispatch();
     
     const addTask = async () =>{
-
+        var mode = "";
         console.log(sunIcon);
         console.log(moonIcon);
         console.log(task);
-        // await dispatch(
-        //     taskActions.addTask(
-        //         userId,
-        //         userEmail,
-        //         task,
-        //         mode
-        //     )
-        // );
+        if (sunIcon == true){
+            mode = "sun";
+        }
+        else if(moonIcon == true){
+            mode = "moon";
+        }else{
+            mode = "both";
+        }
+        console.log(mode);
+        await dispatch(
+            taskActions.addTask(
+                userId,
+                userEmail,
+                task,
+                mode
+            )
+        );
         setTask("");
         setMoonIcon(false);
         setSunIcon(false);
