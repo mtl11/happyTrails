@@ -8,18 +8,18 @@ const Navbar = props =>{
     <View style ={styles.taskBar}>
             <TouchableOpacity style = {styles.taskBarElements} 
                 onPress={() => {props.props.navigation.navigate({routeName: "TasksScreen"})}}>
-                {currentScreen== "TasksScreen" ? <Ionicons name="ios-list-circle" size={40} color="black" /> :
-                 <Ionicons name="ios-list-circle-outline" size={40} color="black" />}
+                {currentScreen== "TasksScreen" ? <Ionicons name="ios-list-circle" size={40} color="white" /> :
+                 <Ionicons name="ios-list-circle-outline" size={40} color="white" />}
             </TouchableOpacity>
             <TouchableOpacity style = {styles.taskBarElements}
             onPress={() => {props.props.navigation.navigate({routeName: "ProfileScreen"})}}>
-                {currentScreen== "ProfileScreen" ? <FontAwesome5 name="user-alt" size={30} color="black" />:
-                 <FontAwesome5 name="user" size={30} color="black" />}
+                {currentScreen== "ProfileScreen" ? <FontAwesome5 name="user-alt" size={30} color="white" />:
+                 <FontAwesome5 name="user" size={30} color="white" />}
             </TouchableOpacity>
             <TouchableOpacity style = {styles.taskBarElements}
             onPress={() => {props.props.navigation.navigate({routeName: "JournalScreen"})}}>
-                {currentScreen== "JournalScreen" ? <Ionicons name="ios-journal" size={30} color="black" /> :
-                 <Ionicons name="ios-journal-outline" size={30} color="black" /> }
+                {currentScreen== "JournalScreen" ? <Ionicons name="ios-journal" size={30} color="white" /> :
+                 <Ionicons name="ios-journal-outline" size={30} color="white" /> }
             </TouchableOpacity>
     </View>
     )
@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
         //borderTopWidth: 1,
         flexDirection: 'row',
         justifyContent:'space-between',
-        backgroundColor: 'white'
+        backgroundColor: 'black'
     },taskBarElements:{
         alignItems: 'center',
         justifyContent:'flex-start',

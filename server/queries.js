@@ -1,3 +1,5 @@
+const { response } = require('express')
+
 const Pool = require('pg').Pool
 
 const pool = new Pool({
@@ -38,9 +40,30 @@ const getUsers = (request, response) => {
       }
     })
   }
-
+const addPage = (request, response) =>{
+  const {userId, mood, date, dow, journalEntry} = request.body;
+    // console.log(userId);
+    // console.log(mood);
+    // console.log(date);
+    // console.log(journalEntry);
+    // console.log(dow);
+    pool.query('INSERT INTO journalPages (userid, mood, date, dow, journalentry) VALUES ($1, $2, $3, $4, $5)', 
+    [userId, mood, date, dow, journalEntry], (error, results) => {
+      if (error) {
+        throw error
+      }
+    })
+}
 const getTasks = (request, response) => {
   pool.query('SELECT * FROM tasks', (error, results) => {
+    if (error) {
+      throw error
+    }
+    response.status(200).json(results.rows)
+  })
+}
+const getJournalPage = (request, response) => {
+  pool.query('SELECT * FROM journalPages', (error, results) => {
     if (error) {
       throw error
     }
@@ -88,5 +111,7 @@ module.exports = {
     addTask,
     getTasks,
     getTasksById,
-    deleteTask
+    deleteTask,
+    addPage,
+    getJournalPage
 }

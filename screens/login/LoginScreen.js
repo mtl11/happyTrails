@@ -34,7 +34,7 @@ const LoginScreen = props => {
             console.log(err);
         }
     }
-    const call = () => {
+    const call = (userData) => {
         props.navigation.navigate({routeName: 'OtherNav'})
     }
     

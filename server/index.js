@@ -26,3 +26,5 @@ app.post('/tasks', db.addTask);
 app.get('/tasks', db.getTasks);
 app.get('/tasks/:userid', db.getTasksById);
 app.post('/tasks/:taskid', db.deleteTask);
+app.post('/journalPage', db.addPage);
+app.get('/journalPage', db.getJournalPage);

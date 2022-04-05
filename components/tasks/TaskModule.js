@@ -27,6 +27,7 @@ const TaskModule = props =>{
             mode = "both";
         }
         console.log(mode);
+        
         await dispatch(
             taskActions.addTask(
                 userId,
@@ -35,6 +36,12 @@ const TaskModule = props =>{
                 mode
             )
         );
+
+        props.addLocal(userId,
+            userEmail,
+            task,
+            mode);
+
         setTask("");
         setMoonIcon(false);
         setSunIcon(false);

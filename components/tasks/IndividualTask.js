@@ -12,6 +12,7 @@ const IndividualTask = (props) => {
         // console.log(props.id);
         // console.log(props.userId);
         // console.log(props.info);{}
+        props.localRemove(props.id);
         await dispatch(
             taskActions.deleteTask(
                 props.id,

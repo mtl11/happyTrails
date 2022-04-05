@@ -8,10 +8,10 @@ export const userTasks = (myTasks) => {
 
 export const addTask = (userId, userEmail, task, mode) =>{
     return async dispatch =>{
-        console.log(task);
-        console.log(userEmail);
-        console.log(userId);
-        console.log(mode);
+        // console.log(task);
+        // console.log(userEmail);
+        // console.log(userId);
+        // console.log(mode);
         fetch('http://localhost:3000/tasks',
         {
             method: 'POST',
@@ -40,8 +40,9 @@ export const getTask = (userId) =>{
                 }
             }
         })
-        console.log(myTasks);
+        //console.log(myTasks);
         dispatch(userTasks(myTasks));
+        AsyncStorage.setItem("myTasks", JSON.stringify(myTasks));
     }
 }
 

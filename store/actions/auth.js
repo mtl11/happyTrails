@@ -1,6 +1,6 @@
 export const AUTHENTICATE = 'AUTHENTICATE';
 export const LOGOUT = 'LOGOUT';
-
+import * as journalActions from './journalPage';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 export const authenticate = (userId, username, firstName, age, email, password, loggedIn) => {
   return { type: AUTHENTICATE, userId: userId, username: username, firstName: firstName, 
@@ -17,7 +17,9 @@ export const login = (email, password) =>{
                         if(email == userInfo.email && password == userInfo.password){
                             dispatch(authenticate(userInfo.id,userInfo.username, 
                                 userInfo.firstName, userInfo.age, userInfo.email, userInfo.password, true));
+                                AsyncStorage.setItem("userId", userInfo.id.toString());
                             saveDataToStorage(userInfo.username, userInfo.firstName, userInfo.age, userInfo.email,userInfo.password);
+                            dispatch(journalActions.getPages(userInfo.id.toString()));
                             return;
                         }
                     }
@@ -27,6 +29,7 @@ export const login = (email, password) =>{
             })
     }
 }
+
 export const signUp = (username, firstName, email, password, age) => {
     return async dispatch => {
         fetch('http://localhost:3000/users',
