@@ -9,13 +9,37 @@ import IndividualTask from '../../components/tasks/IndividualTask';
 import { AntDesign } from '@expo/vector-icons';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import color from '../../constants/color';
 
 const TasksScreen = props => {
     const [visible, setVisible] = useState(false);
     //const userId= useSelector(state => state.auth.userId);
     //const tasks = useSelector(state => state.tasks.tasks);
     const [loading, setLoading] = useState(true);
-    const [allTasks, setAllTasks] = useState();
+    const [allTasks, setAllTasks] = useState([{
+        "email": "Test",
+        "id": 14,
+        "mode": "moon",
+        "show": "Y",
+        "task": "Go to Sleep",
+        "userid": 6,
+      },
+    {
+        "email": "Test",
+        "id": 28,
+        "mode": "sun",
+        "show": "Y",
+        "task": "Apples",
+        "userid": 6,
+      },
+       {
+        "email": "Test",
+        "id": 29,
+        "mode": "sun",
+        "show": "Y",
+        "task": "Eggs Benedict Breakfast",
+        "userid": 6,
+      }]);
     const dispatch = useDispatch();
     const [sunIcon, setSunIcon] = useState(false);
     const [allIcon, setAllIcon] = useState(true);
@@ -23,12 +47,14 @@ const TasksScreen = props => {
 
     const getTasksFunc = async (value) => {
         //console.log(userId);
-        await dispatch(taskActions.getTask(value));
-        const myTasks = await AsyncStorage.getItem('myTasks');
-        const data = JSON.parse(myTasks);
+        //await dispatch(taskActions.getTask(value));
+        //const myTasks = await AsyncStorage.getItem('myTasks');
+        //const data = JSON.parse(myTasks);
+        const data = allTasks;
         var length = data.length;
         for (var i = 0; i< length;i++){
             data[i]["show"] = "Y";
+            //data[i]["completed"] = "N";
         }
         console.log(data);
         setAllTasks(data);
@@ -44,6 +70,7 @@ const TasksScreen = props => {
         });
         // setAllTasks(newTasks);
     }
+    
     const localRemove = (id) => {
         const filteredData = allTasks.filter(item => item.id !== id);
         setAllTasks(filteredData);
@@ -83,9 +110,9 @@ const TasksScreen = props => {
     useEffect(async ()=>{
         const value = await AsyncStorage.getItem('userId');
         console.log(value);
-        getTasksFunc(value);
+
+        //getTasksFunc(value);
         setLoading(false);
-        
     },[]);
 
     return (
@@ -95,21 +122,34 @@ const TasksScreen = props => {
             visible ={visible}
             setVisible = {setVisible}/>
             <View style = {styles.taskContainer}>
+               <TouchableOpacity style={styles.addButton1} onPress={()=>{setVisible(!visible)}}>
+                        <AntDesign name="pluscircleo" size={30} color="white" />
+                </TouchableOpacity>
+           
                 <View style = {styles.iconContainer}>
                     <TouchableOpacity 
-                        style={[styles.topIcons,{backgroundColor: sunIcon ? "#A8FFFF": null,}]} 
-                        onPress={()=>{setSunIcon(true),setAllIcon(false),setMoonIcon(false), changeTasks("sun")}}>
-                            <Fontisto name="day-sunny" size={24} color="black" />
-                    </TouchableOpacity>
-                    <TouchableOpacity 
-                        style={[styles.topIcons,{backgroundColor: allIcon ? "#A8FFFF": null,}]} 
+                        style={styles.topIcons} 
                         onPress={()=>{setSunIcon(false),setAllIcon(true),setMoonIcon(false), changeTasks("all")}}>
-                            <Fontisto name="world-o" size={24} color="black" />
+                            {/* <Fontisto name="world-o" size={24} color="black" /> */}
+                            <Text style={[styles.topText, {opacity: allIcon ? 1 : .3}]}>
+                                All
+                            </Text>
                     </TouchableOpacity>
                     <TouchableOpacity 
-                        style={[styles.topIcons,{backgroundColor: moonIcon ? "#A8FFFF": null,}]} 
+                        style={styles.topIcons} 
+                        onPress={()=>{setSunIcon(true),setAllIcon(false),setMoonIcon(false), changeTasks("sun")}}>
+                            {/* <Fontisto name="day-sunny" size={24}  color= {sunIcon ? "black": "red"}/> */}
+                            <Text style={[styles.topText, {opacity: sunIcon ? 1 : .3}]}>
+                                Morning
+                            </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity 
+                        style={styles.topIcons} 
                         onPress={()=>{setSunIcon(false),setAllIcon(false),setMoonIcon(true), changeTasks("moon")}}>
-                            <Fontisto name="night-clear" size={24} color="black" />
+                            {/* <Fontisto name="night-clear" size={24} color="black" /> */}
+                            <Text style={[styles.topText, {opacity: moonIcon ? 1 : .3}]}>
+                            Night
+                            </Text>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.taskList}>
@@ -128,19 +168,17 @@ const TasksScreen = props => {
                             : null)}
                         style = {styles.taskFlatList}
                         />)}
-                        
-                        <TouchableOpacity style={styles.addButton} onPress={()=>{setVisible(!visible)}}>
-                            
+                        {/* <TouchableOpacity style={styles.addButton} onPress={()=>{setVisible(!visible)}}>
                         <AntDesign name="pluscircleo" size={28} color="black" />
                             <Text style={styles.addText}>Add Routine</Text>
-                        </TouchableOpacity>
+                        </TouchableOpacity> */}
                     <View>
                 </View>
                 </View>
             </View>
             <Navbar 
             props = {props}
-            />
+                />
         </View>
     )
 }
@@ -149,26 +187,36 @@ const styles = StyleSheet.create({
     taskContainer:{
         height: "90%",
         alignContent:'center',
-        backgroundColor: "#FFFFDB",
+        backgroundColor: color.primary
+        //backgroundColor: "#23395d"
+        // backgroundColor: "#FFFFDB",
+        // backgroundColor: "#DCDCDC"
     },
     addText:{
         fontSize: 24
     },
     taskList:{
         height:"90%",
-        backgroundColor: "#FFFFDB"
+        // backgroundColor: "#FFFFDB"
+        backgroundColor: color.primaryGray
     },
     topIcons:{
-        padding: 8,
-        borderRadius: 45
+        paddingTop: 16,
+        paddingHorizontal: 16,
+        borderRadius: 45,
+        
+    },
+    topText:{
+        fontSize: 18
     },
     iconContainer:{
         justifyContent: "space-between",
         flexDirection: 'row',
-        marginTop: '10%',
+        //marginTop: '20%',
        
         marginBottom: '1.5%',
-        marginHorizontal: '5%'
+        marginHorizontal: '5%',
+        
     },
     modalView:{
         flex: 1,
@@ -205,6 +253,11 @@ const styles = StyleSheet.create({
         marginBottom: 10, 
         backgroundColor: "#FFDBFF",
         height: "8%"
+    },
+    addButton1:{
+        alignSelf:"flex-end",
+        marginTop: "12%",
+        marginRight: "8%"
     }
 })
 

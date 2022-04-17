@@ -14,11 +14,12 @@ export const login = (email, password) =>{
                 .then((json) => {
                     for (const item in json){
                         const userInfo = json[item];
+                        console.log(userInfo);
                         if(email == userInfo.email && password == userInfo.password){
                             dispatch(authenticate(userInfo.id,userInfo.username, 
                                 userInfo.firstName, userInfo.age, userInfo.email, userInfo.password, true));
                                 AsyncStorage.setItem("userId", userInfo.id.toString());
-                            saveDataToStorage(userInfo.username, userInfo.firstName, userInfo.age, userInfo.email,userInfo.password);
+                            saveDataToStorage(userInfo.username, userInfo.firstname, userInfo.age, userInfo.email,userInfo.password);
                             dispatch(journalActions.getPages(userInfo.id.toString()));
                             return;
                         }
@@ -48,6 +49,7 @@ export const signUp = (username, firstName, email, password, age) => {
 }
 
 const saveDataToStorage = (username, firstName, age, email,password)=>{
+    console.log("name: "+firstName);
     AsyncStorage.setItem('userData', JSON.stringify({
       username:username,
       firstName:firstName,

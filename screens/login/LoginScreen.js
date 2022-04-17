@@ -8,7 +8,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 //import { signUp } from '../../store/actions/auth';
 import {useSelector, useDispatch} from 'react-redux';
 //import styles from '../../styles/login';
-
+import color from "../../constants/color";
+import fonts from '../../constants/fonts';
 const LoginScreen = props => {
     const [modalVisibleSignUp, setModalVisibleSignUp] = useState(false);
     const dispatch = useDispatch();
@@ -69,7 +70,7 @@ const LoginScreen = props => {
                         <AntDesign name="user" size={24} color="gray" />
                         <TextInput
                             placeholder = {'Email'}
-                            style = {{fontSize:20,width:"90%"}}
+                            style = {{fontSize:20,width:"90%", fontFamily: fonts.main}}
                             onChangeText={text => setEmail(text)}
                             autoCapitalize = {'none'}
                             autoCorrect = {false}
@@ -80,7 +81,7 @@ const LoginScreen = props => {
                         <AntDesign name="lock" size={24} color="gray" />
                         <TextInput
                             placeholder = {'Password'}
-                            style = {{fontSize:20, width:"90%"}}
+                            style = {{fontSize:20, width:"90%", fontFamily: fonts.main}}
                             onChangeText={text => setPassword(text)}
                             autoCapitalize = {'none'}
                             autoCorrect = {false}
@@ -97,14 +98,13 @@ const LoginScreen = props => {
                     tryLogin()
                 //setModalVisibleLogin(!modalVisibleLogin)
             }}>
-                    <View style = {styles.gamePlayButtons}>
+                 
                         <Text style={styles.titleText}>
                             Login 
                         </Text>
-                    </View>
             </TouchableOpacity>
         <View style = {styles.authContainer2}>
-            <Text>Don't have an account ? </Text>
+            <Text style={styles.signUpTextNoBold}>Don't have an account ? </Text>
             <TouchableOpacity onPress={()=>{setModalVisibleSignUp(!modalVisibleSignUp)}}> 
                 <View>
                     <Text style = {styles.signUpText}>
@@ -127,8 +127,8 @@ const styles = StyleSheet.create({
         marginTop: '5%',
         justifyContent: "space-evenly",
         borderWidth:2,
-        borderRadius: 10,
-        backgroundColor: "#FFDBFF"
+        borderRadius: 45,
+        backgroundColor: color.primary,
     },
     authContainer2:{
         flexDirection: 'row',
@@ -157,7 +157,8 @@ const styles = StyleSheet.create({
     },
     titleText:{
         fontSize: 20,
-        padding:2
+        padding:2,
+        fontFamily: fonts.main
     },
     img:{
         height: 150,
@@ -170,21 +171,33 @@ const styles = StyleSheet.create({
         borderWidth:1
     },
     signUpText:{
-        fontWeight: "bold"
+        fontWeight: "bold",
+        fontFamily: fonts.mainBold
+    },
+    signUpTextNoBold:{
+        fontFamily: fonts.main
     },
     userInput: {
+        //original
+        // flexDirection: 'row',
+        // padding: 8,
+        // fontSize: 20,
+        // marginBottom: 12,
+        // marginTop: 12,
+        // backgroundColor: "#FFFFDB",
+        // shadowColor: '#171717',
+        // shadowOffset: {width: -4, height: 4},
+        // shadowOpacity: 0.2
         flexDirection: 'row',
         padding: 8,
         fontSize: 20,
         marginBottom: 12,
         marginTop: 12,
-        backgroundColor: "#FFFFDB",
-        shadowColor: '#171717',
-        shadowOffset: {width: -4, height: 4},
-        shadowOpacity: 0.2
+        backgroundColor: color.primaryGray,
     },
     smallText: {
-        fontSize: 20
+        fontSize: 20,
+        fontFamily: fonts.main
     },
     dialogBox:{
         width:'90%',
