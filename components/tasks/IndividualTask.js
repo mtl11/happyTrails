@@ -10,13 +10,17 @@ import { Feather } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import color from '../../constants/color';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
+import fonts from '../../constants/fonts';
+import BouncyCheckbox from "react-native-bouncy-checkbox";
+import { MaterialIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import TaskModuleEdit from './TaskModuleEdit';
 const IndividualTask = (props) => {
     const dispatch = useDispatch();
+
+    const [visibleEdit, setVisibleEdit] = useState(false);
     const [completed, setCompleted] = useState(false);
     const deleteTask = async () =>{
-        // console.log(props.id);
-        // console.log(props.userId);
-        // console.log(props.info);{}
         props.localRemove(props.id);
         await dispatch(
             taskActions.deleteTask(
@@ -25,12 +29,7 @@ const IndividualTask = (props) => {
             )
         );
     }
-    // const renderLeftActions = (progress, dragX) => {
-    //     const trans = dragX.interpolate({
-    //       inputRange: [0, 50, 100, 101],
-    //       outputRange: [-20, 0, 0, 1],
-    //     });
-    // }
+    
     const renderLeftActions = () => {
         return (
           <View style={{ justifyContent: 'center', alignItems: 'flex-end',}}>
@@ -47,85 +46,66 @@ const IndividualTask = (props) => {
                     <AntDesign name="delete" size={24} color="black" />
                     </Text>
                 </TouchableOpacity>
-             
-            
           </View>
         );
     }
     const renderRightActions = () => {
         return (
+            
           <View
             style={{
               justifyContent: 'center',
               alignItems: 'flex-end',
             }}
           >
+              <TouchableOpacity onPress={()=>{setVisibleEdit(true)}}>
             <Text
               style={{
                 paddingHorizontal: "10%",
                 paddingVertical: 20,
               }}
             >
-            <Feather name="edit-2" size={24} color="black" />
+                
+                    <Feather name="edit-2" size={24} color="black" />
+                
             </Text>
+            </TouchableOpacity>
           </View>
+         
         );
     }
+    const chooseIcon = (icon) =>{
+        if (icon == "Task"){
+            return (
+                <MaterialCommunityIcons name="clipboard-list-outline" size={24} color="black" />
+            )
+        }if (icon == "Habit"){
+            return (
+                <FontAwesome5 name="clock" size={20} color="black" />
+            )
+        }else{
+            return(
+                <MaterialIcons name="self-improvement" size={24} color="black" />
+            )
+        }
+    }
     return (
-        // <View style = {styles.container}>
-        //     <View style={[styles.completeContainer,{borderColor: props.mode == "sun" ? "orange" : "blue"}]}>
-        //     <TouchableOpacity 
-        //     onPress={()=>{Alert.alert(
-        //         "Delete Routine",
-        //         "This cannot be undone",
-        //         [{  text: "Cancel",
-        //             onPress: () => console.log("Cancel Pressed"),
-        //             style: "cancel"},
-        //           { text: "Delete", onPress: () => deleteTask(), style:"destructive" }]
-        //       );}}>
-        //           <View padding={6}  opacity= {.5}>
-        //           <Feather name="x-circle" size={20} color="red" />
-        //           </View>
-                
-        //     </TouchableOpacity>
-        //     </View>
-        //     <View style={styles.rowContainer}>
-        //     <View style ={styles.indvTaskContainer}>
-        //         <View style={styles.timeContainer}>
-        //             <Text style={styles.timeText}>
-        //                 8am
-        //             </Text>
-        //             <Text style={styles.timeText}>
-        //                 45min
-        //             </Text>
-        //         </View>
-        //         <Text style = {styles.taskText}>
-        //            {props.info}
-        //         </Text>
-        //         {/* {props.mode == "sun" ? 
-        //         <View style={styles.modeContainer}>
-        //             <Fontisto name="day-sunny" size={20} color="black" />
-        //             <Text style={styles.smallText}> Morning</Text>
-        //          </View>
-        //         :<View style={styles.modeContainer}> 
-        //         <Fontisto name="night-clear" size={20} color="black" />
-        //         <Text style={styles.smallText}> Night</Text>
-        //         </View>} */}
-        //     </View>
-        //     <TouchableOpacity onPress={()=>{setCompleted(!completed);}}>
-        //             <View padding={8}>
-        //                 {completed ? <FontAwesome5 name="check-circle" size={24} color={color.primary} /> : <FontAwesome5 name="circle" size={24} color="black" />}
-        //             </View>  
-        //         </TouchableOpacity>
-        //     </View>
-        // </View>
         <Swipeable 
         renderLeftActions={renderLeftActions}
         renderRightActions={renderRightActions}
-        //rightThreshold ={0}
-        //renderRightActions={null}
         >
         <View style = {styles.container}>
+        <TaskModuleEdit
+            visible ={visibleEdit}
+            setVisible = {setVisibleEdit}
+            info ={props.info}
+            icon = {props.icon}
+            duration = {props.duration}
+            date = {props.time}
+            id = {props.id}
+            updateLocal = {props.updateLocal}
+            localRemove = {props.localRemove}
+            />
             <View style={styles.rowContainer}>
                 <Text style = {styles.taskText}>
                     {props.info}
@@ -135,23 +115,29 @@ const IndividualTask = (props) => {
                     <View style={styles.timeContainer}>
                         {props.mode == "sun" ? <Fontisto name="day-sunny" size={20} color="black" /> : <Fontisto name="night-clear" size={20} color="black" />}
                         <Text style={styles.timeText}>
-                            8am
+                            {props.time}
                         </Text>
                         <Entypo name="dot-single" size={24} color="black" />
                         <Text style={styles.timeText}>
-                            45min
+                            {props.duration}min
                         </Text>
                     </View>
                     <View style={[styles.timeContainer,{marginBottom: 5}]}>
-                    <FontAwesome5 name="clock" size={20} color="black" />
+                    {chooseIcon(props.icon)}
                         <Text style={styles.timeText}>
-                            Habit
+                            {props.icon}
                         </Text>
                     </View>
                 </View>
                 <TouchableOpacity onPress={()=>{setCompleted(!completed);}}>
                      <View padding={8}>
-                         {completed ? <FontAwesome5 name="check-circle" size={24} color={color.primary} /> : <FontAwesome5 name="circle" size={24} color="black" />}
+                     <BouncyCheckbox
+                        size={30}
+                        fillColor={color.primary}
+                        unfillColor="#FFFFFF"
+                        iconStyle={[{ borderColor: "black" },{borderWidth: 1.5}]}
+                        onPress={(isChecked) => {}}
+                    />
                      </View>  
                  </TouchableOpacity>
                  </View>
@@ -164,7 +150,8 @@ const IndividualTask = (props) => {
 const styles = StyleSheet.create({
     timeText:{
         opacity: .5,
-        paddingHorizontal: 5
+        paddingHorizontal: 5,
+        fontFamily: fonts.main
     },infoContainer:{
         marginHorizontal: 10
         //alignItems: 'center',
@@ -212,7 +199,8 @@ const styles = StyleSheet.create({
     taskText:{
         fontSize: 20,
         color: "black",
-        marginTop: 10
+        //marginTop: 10,
+        fontFamily: fonts.mainLightBold
     },
     container:{
         //flexDirection: 'row',

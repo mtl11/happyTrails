@@ -31,10 +31,10 @@ const getUsers = (request, response) => {
     })
   }
   const addTask = (request, response) =>{
-      const {userId, userEmail, task, mode} = request.body;
+      const {userId, userEmail, task, mode, duration, time, icon} = request.body;
       console.log("task added");
-      pool.query('INSERT INTO tasks (userid, email, task, mode) VALUES ($1, $2, $3, $4)', 
-    [userId, userEmail, task, mode], (error, results) => {
+      pool.query('INSERT INTO tasks (userid, email, task, mode, duration, time, icon) VALUES ($1, $2, $3, $4, $5, $6, $7)', 
+    [userId, userEmail, task, mode, duration, time, icon], (error, results) => {
       if (error) {
         throw error
       }

@@ -12,16 +12,16 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { Input } from 'react-native-elements/dist/input/Input';
 
-const TaskModule = props =>{
+const TaskModuleEdit = props => {
     const userEmail = useSelector(state => state.auth.email);
     const userId= useSelector(state => state.auth.userId);
-    const [task, setTask] = useState("");
+    const [task, setTask] = useState(props.info);
 
-    const [date, setDate] = useState(new Date());
+    const [date, setDate] = useState(new Date(12,12,11,props.date.split(":")[0], props.date.split(":")[1].slice(0,2)));
     const [mode, setMode] = useState('time');
-    const [duration, setTime] = useState("");
+    const [duration, setTime] = useState(props.duration);
 
-    const [icon, setIcon] = useState("");
+    const [icon, setIcon] = useState(props.icon);
 
     const [timeModal, setTimeModal] = useState(false);
 
@@ -33,50 +33,36 @@ const TaskModule = props =>{
         setDate(currentDate);
       };
 
-    const addTask = async () =>{
+    const updateLocal = async () =>{
         var timeOfTask = date.toLocaleString().split(" ")[1].split(":");
         var amOrpm = date.toLocaleString().split(" ")[2];
         var time = timeOfTask[0] + ":" + timeOfTask[1]+amOrpm;
         var mode = "";
-        // console.log(userId);
-        // console.log(userEmail);
-        // console.log(task);
-        // console.log(icon);
-        // console.log(time);
-        // console.log(duration);
-        if (amOrpm == "AM") {
+        if (amOrpm == "pm") {
             mode = "sun";
         }else{
             mode = "moon";
         }
-        await dispatch(
-            taskActions.addTask(
-                userId,
-                userEmail,
-                task,
-                mode,
-                duration,
-                time,
-                icon
-            )
-        );
-
-        props.addLocal(userId,
-            userEmail,
+        // await dispatch(
+        //     taskActions.addTask(
+        //         userId,
+        //         userEmail,
+        //         task,
+        //         mode,
+        //         duration,
+        //         time,
+        //         icon
+        //     )
+        // );
+        //props.localRemove(props.id);
+        props.updateLocal(props.id,
             task,
             mode,
             duration,
-            time,
-            icon    );
-
-        reset();
+                time,
+                icon);
     }
-    const reset = () =>{
-        setTask("");
-        setIcon("");
-        setTime("");
-        
-    }
+    
     return (
     <Modal
         animationType="fade"
@@ -86,7 +72,7 @@ const TaskModule = props =>{
         <View style = {styles.modalView}>
             <View style = {styles.modalContainer}>
                 <Text style={styles.bigText}>
-                    Create a Routine:
+                    Edit Routine:
                 </Text>
                 <View style={styles.inputsContainer}>
                     <View style={styles.inputTextContainer}>
@@ -96,6 +82,7 @@ const TaskModule = props =>{
                         maxLength={20}
                         placeholder={"Title"}
                         returnKeyType="done"
+                        value={task}
                         />
                         <Text style={styles.lengthFont}>
                         {task.length}/20
@@ -153,6 +140,7 @@ const TaskModule = props =>{
                         maxLength ={2}
                         placeholder={"00"}
                         returnKeyType="done"
+                        value = {duration}
                         onChangeText={(text)=>{setTime(text);}}
                     />
                     <Text style={styles.timeText}>
@@ -162,15 +150,15 @@ const TaskModule = props =>{
                 <View style={styles.buttonOverview}>
                 <TouchableOpacity 
                     style={[styles.buttonContainer,{backgroundColor: color.primary}]}
-                    onPress ={()=>{task.length != 0 ? [addTask(), 
+                    onPress ={()=>{task.length != 0 ? [updateLocal(), 
                     props.setVisible(!props.visible)]:setInputError(!inputError)}}
                 >
                     <Text style={styles.buttonText}>
-                        Add
+                        Update
                     </Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={[styles.buttonContainer, {borderColor: color.primary}]}
-                onPress ={()=>{reset();props.setVisible(!props.visible)}}
+                onPress ={()=>{props.setVisible(!props.visible)}}
                 >
                     <Text style={styles.buttonText}>
                         Cancel
@@ -337,4 +325,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default TaskModule;
+export default TaskModuleEdit;

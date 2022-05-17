@@ -13,7 +13,7 @@ const OtherNav = createSwitchNavigator({
 });
 
 const MainNav = createSwitchNavigator({
-   // LoginScreen: LoginScreen,
+    LoginScreen: LoginScreen,
     OtherNav: OtherNav
 })
 

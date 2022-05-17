@@ -12,7 +12,7 @@ const Navbar = props =>{
                 onPress={() => {props.props.navigation.navigate({routeName: "TasksScreen"})}}>
                 {currentScreen== "TasksScreen" ? 
                <View style = {[styles.iconIndv,{marginTop: 5}]}>
-                   <FontAwesome name="list" size={30} color={color.primary} />
+                   <FontAwesome name="list" size={30} color="black" />
                    <Text style={styles.textBar}>Routine</Text>
                 </View>
                 :
@@ -25,7 +25,7 @@ const Navbar = props =>{
             onPress={() => {props.props.navigation.navigate({routeName: "AffirmationsScreen"})}}>
                 {currentScreen== "AffirmationsScreen" ? 
                 <View style = {[styles.iconIndv,{marginTop: 2}]}>
-                     <MaterialCommunityIcons name="brain" size={32} color={color.primary} />
+                     <MaterialCommunityIcons name="brain" size={32} color="black" />
                     <Text style={styles.textBar}>Exercises</Text>
                 </View> 
                 :
@@ -38,7 +38,7 @@ const Navbar = props =>{
             onPress={() => {props.props.navigation.navigate({routeName: "JournalScreen"})}}>
                 {currentScreen== "JournalScreen" ? 
                 <View style = {styles.iconIndv}>
-                    <Ionicons name="ios-journal" size={32} color={color.primary}/>
+                    <Ionicons name="ios-journal" size={32} color="black"/>
                     <Text style={styles.textBar}>Journal</Text>
                 </View> 
                 :
@@ -51,7 +51,7 @@ const Navbar = props =>{
             onPress={() => {props.props.navigation.navigate({routeName: "ProfileScreen"})}}>
                 {currentScreen== "ProfileScreen" ? 
                 <View style = {[styles.iconIndv,{marginTop: 4}]}>
-                    <FontAwesome name="user-circle-o" size={32} color={color.primary} />
+                    <FontAwesome name="user-circle-o" size={32} color="black" />
                     <Text style={[styles.textBar,{color:color.primary}]}>Profile</Text>
                 </View>
                 :

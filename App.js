@@ -25,6 +25,7 @@ export default function App() {
     'Poppins-Regular' : require("./assets/fonts/Poppins-Regular.ttf"),
     'Poppins-Bold' : require("./assets/fonts/Poppins-Bold.ttf"),
     'Poppins-Light' : require("./assets/fonts/Poppins-Light.ttf"),
+    "JosefinSans-Regular" : require("./assets/fonts/JosefinSans-Regular.ttf")
   });
   //let fontsLoaded = true;
   if (!fontsLoaded) {

@@ -7,39 +7,15 @@ import {useSelector, useDispatch} from 'react-redux';
 import * as taskActions from '../../store/actions/task';
 import IndividualTask from '../../components/tasks/IndividualTask';
 import { AntDesign } from '@expo/vector-icons';
-
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import color from '../../constants/color';
+import fonts from '../../constants/fonts';
 
 const TasksScreen = props => {
     const [visible, setVisible] = useState(false);
-    //const userId= useSelector(state => state.auth.userId);
-    //const tasks = useSelector(state => state.tasks.tasks);
+   
     const [loading, setLoading] = useState(true);
-    const [allTasks, setAllTasks] = useState([{
-        "email": "Test",
-        "id": 14,
-        "mode": "moon",
-        "show": "Y",
-        "task": "Go to Sleep",
-        "userid": 6,
-      },
-    {
-        "email": "Test",
-        "id": 28,
-        "mode": "sun",
-        "show": "Y",
-        "task": "Apples",
-        "userid": 6,
-      },
-       {
-        "email": "Test",
-        "id": 29,
-        "mode": "sun",
-        "show": "Y",
-        "task": "Eggs Benedict Breakfast",
-        "userid": 6,
-      }]);
+    const [allTasks, setAllTasks] = useState();
     const dispatch = useDispatch();
     const [sunIcon, setSunIcon] = useState(false);
     const [allIcon, setAllIcon] = useState(true);
@@ -47,26 +23,29 @@ const TasksScreen = props => {
 
     const getTasksFunc = async (value) => {
         //console.log(userId);
-        //await dispatch(taskActions.getTask(value));
-        //const myTasks = await AsyncStorage.getItem('myTasks');
-        //const data = JSON.parse(myTasks);
-        const data = allTasks;
+        await dispatch(taskActions.getTask(value));
+        const myTasks = await AsyncStorage.getItem('myTasks');
+        const data = JSON.parse(myTasks);
+        //const data = allTasks;
         var length = data.length;
         for (var i = 0; i< length;i++){
             data[i]["show"] = "Y";
             //data[i]["completed"] = "N";
         }
-        console.log(data);
+       // console.log(data);
         setAllTasks(data);
     }
-    const addLocal = (userId, userEmail, task, mode) => {
+    const addLocal = (userId, userEmail, task, mode, duration,time, icon) => {
         const newTasks = allTasks.push({
             "email": userEmail,
              "id": 0,
             "mode": mode,
             "show": "Y",
              "task": task,
-             "userid": userId
+             "userid": userId,
+             "duration":duration,
+                "time":time,
+                "icon":icon
         });
         // setAllTasks(newTasks);
     }
@@ -76,6 +55,31 @@ const TasksScreen = props => {
         setAllTasks(filteredData);
     }
 
+    const updateLocal = (id, task, mode, duration,time, icon)=>{
+        const tasks = allTasks;
+        for (const n in tasks){
+            var item = tasks[n];
+            if(item["id"]==id){
+                console.log("hi");
+                item["task"] = task;
+            }
+        }
+
+        const newTasks = allTasks.push({
+            // "email": userEmail,
+             "id": 0,
+            "mode": "Test",
+            "show": "Y",
+             "task": "Test",
+             "userid": "Test",
+             "duration":duration,
+                "time":time,
+                "icon":icon
+        });
+        // // console.log(allTasks);
+        // setAllTasks(tasks);
+        // console.log(allTasks);
+    }
     const changeTasks = (mode) => {
         var length = allTasks.length;
         if (mode=="sun"){
@@ -110,8 +114,7 @@ const TasksScreen = props => {
     useEffect(async ()=>{
         const value = await AsyncStorage.getItem('userId');
         console.log(value);
-
-        //getTasksFunc(value);
+        getTasksFunc(value);
         setLoading(false);
     },[]);
 
@@ -121,6 +124,7 @@ const TasksScreen = props => {
             addLocal = {addLocal}
             visible ={visible}
             setVisible = {setVisible}/>
+           
             <View style = {styles.taskContainer}>
                <TouchableOpacity style={styles.addButton1} onPress={()=>{setVisible(!visible)}}>
                         <AntDesign name="pluscircleo" size={30} color="white" />
@@ -160,9 +164,13 @@ const TasksScreen = props => {
                         data={allTasks}
                         renderItem={({item}) => ( item.show == "Y" ?
                         <IndividualTask 
+                            time = {item.time} 
+                            icon = {item.icon} 
                             info ={item.task} 
+                            duration ={item.duration}
                             id = {item.id} 
                             userId = {item.userid} 
+                            updateLocal = {updateLocal}
                             localRemove = {localRemove}
                             mode = {item.mode}/> 
                             : null)}
@@ -207,7 +215,8 @@ const styles = StyleSheet.create({
         
     },
     topText:{
-        fontSize: 18
+        fontSize: 16,
+        fontFamily: fonts.main
     },
     iconContainer:{
         justifyContent: "space-between",

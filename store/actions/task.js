@@ -6,7 +6,7 @@ export const userTasks = (myTasks) => {
     return { type: TASKS, tasks: myTasks};
 };
 
-export const addTask = (userId, userEmail, task, mode) =>{
+export const addTask = (userId, userEmail, task, mode, duration, time, icon) =>{
     return async dispatch =>{
         // console.log(task);
         // console.log(userEmail);
@@ -20,7 +20,10 @@ export const addTask = (userId, userEmail, task, mode) =>{
                 {"userId": userId, 
                 "userEmail": userEmail,
                 "task": task,
-                "mode":mode})
+                "mode":mode,
+                "duration":duration,
+                "time": time,
+                "icon" :icon})
             })
     }
 }
@@ -31,7 +34,7 @@ export const getTask = (userId) =>{
         const response = await fetch('http://localhost:3000/tasks')
         .then((response) => response.json())
         .then((json) => {
-            //console.log(json);
+           
             for (const item in json) {
                 const userInfo = json[item];
                 //console.log(userInfo.userid +" : "+userId);
