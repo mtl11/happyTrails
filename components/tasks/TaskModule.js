@@ -160,23 +160,22 @@ const TaskModule = props =>{
                     </Text>
                 </View>
                 <View style={styles.buttonOverview}>
-                <TouchableOpacity 
-                    style={[styles.buttonContainer,{backgroundColor: color.primary}]}
-                    onPress ={()=>{task.length != 0 ? [addTask(), 
-                    props.setVisible(!props.visible)]:setInputError(!inputError)}}
-                >
-                    <Text style={styles.buttonText}>
-                        Add
-                    </Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={[styles.buttonContainer, {borderColor: color.primary}]}
-                onPress ={()=>{reset();props.setVisible(!props.visible)}}
-                >
-                    <Text style={styles.buttonText}>
-                        Cancel
-                    </Text>
-                </TouchableOpacity>
-                
+                    <TouchableOpacity 
+                        style={[styles.buttonContainer,{backgroundColor: color.primary}]}
+                        onPress ={()=>{task.length != 0 ? [addTask(), 
+                        props.setVisible(!props.visible)]:setInputError(!inputError)}}
+                    >
+                        <Text style={styles.buttonText}>
+                            Add
+                        </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={[styles.buttonContainer, {borderColor: color.primary}]}
+                    onPress ={()=>{reset();props.setVisible(!props.visible)}}
+                    >
+                        <Text style={styles.buttonText}>
+                            Cancel
+                        </Text>
+                    </TouchableOpacity>
                 </View>
             </View>
             {/* <Modal 

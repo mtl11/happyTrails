@@ -124,7 +124,6 @@ const TasksScreen = props => {
             addLocal = {addLocal}
             visible ={visible}
             setVisible = {setVisible}/>
-           
             <View style = {styles.taskContainer}>
                <TouchableOpacity style={styles.addButton1} onPress={()=>{setVisible(!visible)}}>
                         <AntDesign name="pluscircleo" size={30} color="white" />
@@ -158,7 +157,7 @@ const TasksScreen = props => {
                 </View>
                 <View style={styles.taskList}>
                         {loading && <Text>Loading...</Text>}
-                        {allTasks && (
+                        {allTasks ? (
                         <FlatList
                         contentContainerStyle={{ paddingBottom: 20 }}
                         data={allTasks}
@@ -175,7 +174,13 @@ const TasksScreen = props => {
                             mode = {item.mode}/> 
                             : null)}
                         style = {styles.taskFlatList}
-                        />)}
+                        />) : 
+                        <View>
+                            <Text>
+                            Loading...
+                            </Text>
+                        </View>
+                        }
                         {/* <TouchableOpacity style={styles.addButton} onPress={()=>{setVisible(!visible)}}>
                         <AntDesign name="pluscircleo" size={28} color="black" />
                             <Text style={styles.addText}>Add Routine</Text>

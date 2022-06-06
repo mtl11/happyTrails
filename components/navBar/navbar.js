@@ -47,7 +47,7 @@ const Navbar = props =>{
                     <Text style={styles.textBar}>Journal</Text>
                 </View>  }
             </TouchableOpacity>
-            <TouchableOpacity style = {styles.taskBarElements}
+            {/* <TouchableOpacity style = {styles.taskBarElements}
             onPress={() => {props.props.navigation.navigate({routeName: "ProfileScreen"})}}>
                 {currentScreen== "ProfileScreen" ? 
                 <View style = {[styles.iconIndv,{marginTop: 4}]}>
@@ -59,7 +59,7 @@ const Navbar = props =>{
                     <FontAwesome name="user-circle-o" size={32} color="black"/>
                     <Text style={styles.textBar}>Profile</Text>
                 </View>}
-            </TouchableOpacity>
+            </TouchableOpacity> */}
     </View>
     )
 }
